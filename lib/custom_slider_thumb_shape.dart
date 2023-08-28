@@ -125,14 +125,11 @@ class CustomSliderThumberShape extends SliderComponentShape {
     Offset circlePoint = Offset(center.dx, center.dy-16-27-10);
 
     final Paint fillPaint1 = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
+      ..color = Colors.white.withOpacity(0.1)
+      ..style = PaintingStyle.fill;
 
     double dy = circlePoint.dy + 27 * cos(pi/12);
     double dxC = circlePoint.dx - 27 * sin(pi/12);
-    double dxC2 = circlePoint.dx + 27 * sin(pi/12);
-    print(dy);
 
     Path pathLabel = Path();
     pathLabel.moveTo(dxC, dy);
@@ -153,7 +150,7 @@ class CustomSliderThumberShape extends SliderComponentShape {
     );
     var textSpan = TextSpan(
       text: '3',
-      style: textStyle.copyWith(fontWeight: FontWeight.bold),
+      style: textStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
       children: <TextSpan>[
         TextSpan(text: '\ndays', style: textStyle),
       ],
