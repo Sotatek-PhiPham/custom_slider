@@ -72,27 +72,34 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            trackHeight: 20.0,
-            inactiveTickMarkColor: Colors.transparent,
-            activeTickMarkColor: Colors.transparent,
-            thumbColor: Color(0xff2FB09A).withOpacity(0.4),
-            trackShape: shape,
-            thumbShape: CustomSliderThumberShape(enabledThumbRadius: 16.0),
-          ),
-          child: Slider(
-            min: 0,
-            max: 7,
-            divisions: 7,
-            value: _value,
-            onChanged: (value) {
-              setState(() {
-                _value = value;
-                int tmp = value.toInt();
-                shape = CustomSliderTrackShape(8, tmp + 1);
-              });
-            },
+        child: SizedBox(
+          height: 100,
+          width: double.infinity,
+          child: SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 20.0,
+              inactiveTickMarkColor: Colors.transparent,
+              activeTickMarkColor: Colors.transparent,
+              thumbColor: Color(0xff2FB09A).withOpacity(0.4),
+              trackShape: shape,
+              thumbShape: CustomSliderThumberShape(enabledThumbRadius: 16.0),
+
+              showValueIndicator: ShowValueIndicator.never
+            ),
+            child: Slider(
+              min: 0,
+              max: 7,
+              divisions: 7,
+              value: _value,
+              label: '$_value',
+              onChanged: (value) {
+                setState(() {
+                  _value = value;
+                  int tmp = value.toInt();
+                  shape = CustomSliderTrackShape(8, tmp + 1);
+                });
+              },
+            ),
           ),
         ),
       ),

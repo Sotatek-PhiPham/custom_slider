@@ -50,13 +50,19 @@ class CustomSliderTrackShape extends SliderTrackShape
       trackRect: trackRect,
     );
 
-
+    final Rect leftTrackSegment = Rect.fromLTRB(trackRect.left, trackRect.top +4, thumbCenter.dx, trackRect.bottom -4);
     final Paint fillPaint1 = Paint()
-      ..color = Colors.blue.withOpacity(opacityTween.evaluate(enableAnimation))
+      ..shader = const LinearGradient(
+        colors: [
+          Color(0xff7E70DF),
+          Color(0xff3E83FC),
+          Color(0xff2FAF99),
+        ],
+      ).createShader(leftTrackSegment)
       ..style = PaintingStyle.fill;
 
     if (selectedValue > 1) {
-      final Rect leftTrackSegment = Rect.fromLTRB(trackRect.left, trackRect.top +4, thumbCenter.dx, trackRect.bottom -4);
+
       _drawTrackShape(
         context: context,
         numberOfMilestone: selectedValue,

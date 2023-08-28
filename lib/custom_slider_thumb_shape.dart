@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:cirle_slider/custom_label.dart';
 import 'package:flutter/material.dart';
 
 class CustomSliderThumberShape extends SliderComponentShape {
+
   CustomSliderThumberShape({
     this.enabledThumbRadius = 10.0,
     this.disabledThumbRadius,
@@ -42,7 +44,9 @@ class CustomSliderThumberShape extends SliderComponentShape {
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return Size.fromRadius(isEnabled == true ? enabledThumbRadius : _disabledThumbRadius);
+    return const Size(54, 88);
+    return Size.fromRadius(
+        isEnabled == true ? enabledThumbRadius : _disabledThumbRadius);
   }
 
   @override
@@ -117,5 +121,63 @@ class CustomSliderThumberShape extends SliderComponentShape {
       6,
       Paint()..color = Colors.white,
     );
+
+    Offset circlePoint = Offset(center.dx, center.dy-16-27-10);
+
+    final Paint fillPaint1 = Paint()
+      ..color = Colors.white
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    double dy = circlePoint.dy + 27 * cos(pi/12);
+    double dxC = circlePoint.dx - 27 * sin(pi/12);
+    double dxC2 = circlePoint.dx + 27 * sin(pi/12);
+    print(dy);
+
+    Path pathLabel = Path();
+    pathLabel.moveTo(dxC, dy);
+    //pathLabel.lineTo(dxC2, dy);
+
+
+    pathLabel.arcTo(
+        Rect.fromLTRB(circlePoint.dx - 27, circlePoint.dy - 27, circlePoint.dx + 27, circlePoint.dy + 27),
+        degreeToRadian(105),
+        degreeToRadian(330), false);
+    pathLabel.lineTo(circlePoint.dx, circlePoint.dy + 27 + 6);
+    pathLabel.lineTo(dxC, dy);
+    canvas.drawPath(pathLabel, fillPaint1);
+
+    final textStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 12,
+    );
+    var textSpan = TextSpan(
+      text: '3',
+      style: textStyle.copyWith(fontWeight: FontWeight.bold),
+      children: <TextSpan>[
+        TextSpan(text: '\ndays', style: textStyle),
+      ],
+    );
+
+
+
+    final textPainter = TextPainter(
+      text: textSpan,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout(
+      minWidth: 0,
+      maxWidth: 100,
+    );
+
+    Offset textOffset = Offset(circlePoint.dx - textPainter.width / 2, circlePoint.dy - textPainter.height / 2);
+
+    textPainter.paint(canvas, textOffset);
+
+  }
+
+  double degreeToRadian(double degree) {
+    return degree * (pi / 180);
   }
 }
